@@ -366,3 +366,15 @@ fn ssh_without_organization() {
 
     assert_eq!(parsed, expected);
 }
+
+#[test]
+fn bad_port_number() {
+    let test_url = "https://github.com:crypto-browserify/browserify-rsa.git";
+    let e = GitUrl::parse(test_url);
+
+    assert!(e.is_err());
+    assert_eq!(
+        format!("{}", e.err().unwrap()),
+        "Url normalization into url::Url failed"
+    );
+}
