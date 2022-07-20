@@ -26,6 +26,8 @@ pub enum Scheme {
     Http,
     /// Represents `https://` url scheme
     Https,
+    #[strum(serialize = "git+https")]
+    GitHttps,
     /// Represents `ssh://` url scheme
     Ssh,
     /// Represents No url scheme
@@ -80,7 +82,7 @@ impl fmt::Display for GitUrl {
                     String::new()
                 }
             }
-            Scheme::Http | Scheme::Https => match (&self.user, &self.token) {
+            Scheme::Http | Scheme::Https | Scheme::GitHttps => match (&self.user, &self.token) {
                 (Some(user), Some(token)) => format!("{}:{}@", user, token),
                 (Some(user), None) => format!("{}@", user),
                 (None, Some(token)) => format!("{}@", token),
